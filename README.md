@@ -1,178 +1,129 @@
-###############################################################################
-#                            INSTALASI ROS2                                   #
-###############################################################################
-
-# 1. Masuk ke terminal Ubuntu dan cek locale
-#
-# Jalankan script berikut:
+1\. Masuk ke terminal ubuntu kalian dan lakukan cek locale dengan script berikut:
 
 locale
 sudo apt update && sudo apt install locales
-sudo locale-gen en_US en_US.UTF-8
-sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-export LANG=en_US.UTF-8
+sudo locale-gen en\_US en\_US.UTF-8
+sudo update-locale LC\_ALL=en\_US.UTF-8 LANG=en\_US.UTF-8
+export LANG=en\_US.UTF-8
 locale
 
-
-# 2. Pastikan Ubuntu Universe repository sudah aktif
+2\. Pastikan Ubuntu Universe repositorynya sudah aktif.
 
 sudo apt install software-properties-common
 sudo add-apt-repository universe
 
+3\. Instal paket ros2-apt-source untuk sistem ubuntu
 
-# 3. Instal paket ros2-apt-source untuk sistem Ubuntu
+
 
 sudo apt update && sudo apt install curl -y
 
-export ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F\" '{print $4}')
+export ROS\_APT\_SOURCE\_VERSION=$(curl -s [https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest](https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest) | grep -F "tag\_name" | awk -F\\" '{print $4}')
 
-curl -L -o /tmp/ros2-apt-source.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo $VERSION_CODENAME)_all.deb"
-
-# Jika menggunakan Ubuntu derivative, gunakan $UBUNTU_CODENAME
+curl -L -o /tmp/ros2-apt-source.deb "[https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS\_APT\_SOURCE\_VERSION}/ros2-apt-source\_${ROS\_APT\_SOURCE\_VERSION}.$(](https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$\(). /etc/os-release && echo $VERSION\_CODENAME)\_all.deb" # If using Ubuntu derivates use $UBUNTU\_CODENAME
 
 sudo dpkg -i /tmp/ros2-apt-source.deb
 
-
-# 4. Instal ROS2 packages
+4\. Instal ROS2 packages.
 
 sudo apt update && sudo apt upgrade
 
-# Jika ada instruksi yes or no, pilih yes.
+Jika ada instruksi yes or no, pilih yes aja.
 
-
-# 5. Install ROS2 Desktop
-#
-# ROS2 Desktop mencakup ROS, RViz, demos, dan tutorials.
+5\. Install ROS2 Desktop untuk ROS, RViz, demos, tutorials.
 
 sudo apt install ros-humble-desktop
 
-# Jika ada instruksi yes or no, pilih yes.
+Jika ada instruksi yes or no, pilih yes aja.
 
-
-# 6. Setup environment
-
-source /opt/ros/humble/setup.bash
-
-
-# 7. Uji coba ROS2 dengan menjalankan talker
+6\. Jika sudah selesai, set up environment terlebih dahulu dengan mengikuti script berikut:
 
 source /opt/ros/humble/setup.bash
-ros2 run demo_nodes_cpp talker
 
-
-# 8. Jalankan listener di terminal yang berbeda
+7\. Uji coba ROS2 dengan menjalankan talker.
 
 source /opt/ros/humble/setup.bash
-ros2 run demo_nodes_cpp listener
+ros2 run demo\_nodes\_cpp talker
 
+8\. Jalankan listener di terminal yang berbeda.
 
+source /opt/ros/humble/setup.bash
+ros2 run demo\_nodes\_cpp listener
 
-###############################################################################
-#                              MULAI MODUL                                   #
-###############################################################################
+mulai modul
 
-
-# 1. Install turtlesim terlebih dahulu
-
+1\. Install turtlesim terlebih dahulu.
 sudo apt update && sudo apt install ros-humble-turtlesim
 
+2\. Jalankan turtlesim.
+ros2 run turtlesim turtlesim\_node
 
-# 2. Jalankan turtlesim
+3\. Buka terminal baru, dan jalankan script berikut. 
+ros2 run turtlesim turtle\_teleop\_key
 
-ros2 run turtlesim turtlesim_node
+Note: Gunakan tombol panah di keyboard untuk menggerakkan kura-kura. Kura-kura tersebut akan bergerak dan meninggalkan jejak berupa garis.
 
+4\. Kita bisa melihat node, topic, dan komponen lain yang sedang aktif dengan perintah list:
 
-# 3. Jalankan turtle teleop
-#
-# Buka terminal baru, kemudian jalankan:
-
-ros2 run turtlesim turtle_teleop_key
-
-# NOTE:
-# Gunakan tombol panah di keyboard untuk menggerakkan kura-kura.
-# Kura-kura akan bergerak dan meninggalkan jejak berupa garis.
-
-
-# 4. Melihat node, topic, service, dan action yang sedang aktif
-
-ros2 node list
-ros2 topic list
+ros2 node list 
+ros2 topic list 
 ros2 service list
 ros2 action list
 
-
-# 5. NODE
-#
-# Melihat informasi mengenai node turtlesim:
+5\. Node
 
 ros2 node info /turtlesim
 
-
-# 6. TOPIC
-#
-# Melihat topic yang sedang aktif:
+6\. Topic
+Kalian bisa melihat topic apa saja yang sedang aktif dengan menjalankan script berikut:
 
 ros2 topic list
 
-
-# Melihat tipe dari topic:
+Jika ingin melihat tipe dari topiknya, kalian bisa menambahkan keterangan “-t” setelah tulisan list.
 
 ros2 topic list -t
 
+Lalu, untuk melihat data apa saja yang dipublish di topik tersebut, kalian bisa menggunakan command berikut:
 
-# Melihat data yang dipublish pada suatu topic:
+ros2 topic echo /turtles2/cmd\_vel
 
-ros2 topic echo /turtle1/cmd_vel
+Atau, kalau ingin melihat informasi lengkap seputar topicnya bisa dengan command berikut:
 
+ros2 topic info /turtle1/cmd\_vel
 
-# Melihat informasi lengkap mengenai topic:
+Kalian bisa juga melihat tipe topic secara detail dengan dengan menggunakan command berikut:
 
-ros2 topic info /turtle1/cmd_vel
+ros2 interface show geometry\_msgs/msg/Twist
 
+Selanjutnya, untuk publish data ke suatu topik, kalian bisa menggunakan command topic pub. Berikut syntaxnya:
+ros2 topic pub \<topic\_name> \<msg\_type> '\<args>'
 
-# Melihat tipe topic secara detail:
+ros2 topic pub /turtle1/cmd\_vel geometry\_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
 
-ros2 interface show geometry_msgs/msg/Twist
+7\. Service
 
-
-# Publish data ke suatu topic
-#
-# Syntax:
-#
-# ros2 topic pub <topic_name> <msg_type> '<args>'
-
-ros2 topic pub /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
-
-
-
-# 7. SERVICE
-#
-# Melihat service yang tersedia:
+Untuk melihat service apa saja yang tersedia, bisa menjalankan command berikut:
 
 ros2 service list -t
 
 
-# Menggunakan sebuah service
-#
-# Syntax:
-#
-# ros2 service call <service_name> <service_type>
 
-ros2 service call /clear std_srvs/srv/Empty
+Untuk menggunakan sebuah service, kita bisa menjalankan command berikut: 
 
+ros2 service call /clear std\_srvs/srv/Empty
 
+8\. Action
 
-# 8. ACTION
-#
-# Melihat action yang tersedia:
+Untuk melihat action apa saja yang tersedia, bisa menjalankan command berikut:
 
 ros2 action list -t
 
+Untuk memanggil action, kita bisa menjalankan command berikut: 
 
-# Memanggil action
-#
-# Syntax:
-#
-# ros2 action send_goal <action_name> <action_type> '<args>'
+ros2 action send\_goal /turtle1/rotate\_absolute turtlesim/action/RotateAbsolute "{theta: 1.57}"
 
-ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute "{theta: 1.57}"
+
+
+
+
+
