@@ -57,11 +57,16 @@ sudo apt install ros-humble-desktop
 > Jika muncul instruksi **yes or no**, pilih `yes`.
 
 ## 6. Setup Environment
-
+Setiap kali membuka terminal baru untuk kerja dengan ROS2 kita wajib menjalankan perintah ini dulu
 ```bash
 source /opt/ros/humble/setup.bash
 ```
 
+## 6.1 Otomatisasi Setup
+Script ini akan menambahkan setup ROS2 ke dalam file bashrc sehingga setiap kali kita membuka terminal baru
+```bash
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+```
 ## 7. Uji Coba ROS2 dengan Menjalankan Talker
 
 ```bash
@@ -77,6 +82,8 @@ Buka terminal baru, kemudian jalankan:
 source /opt/ros/humble/setup.bash
 ros2 run demo_nodes_cpp listener
 ```
+
+
 
 ---
 
